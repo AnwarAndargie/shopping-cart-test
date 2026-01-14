@@ -1,11 +1,13 @@
 {
 	"scripts": {
-		"test": "vitest run"
+		"test": "vitest run",
+		"build": "tsc"
 	},
 	"dependencies": {
 		"decimal.js": "^10.6.0"
 	},
 	"devDependencies": {
+		"typescript": "^5.9.3",
 		"vitest": "^4.0.17"
 	}
 }
