@@ -1,5 +1,11 @@
 {
+	"scripts": {
+		"test": "vitest run"
+	},
 	"dependencies": {
 		"decimal.js": "^10.6.0"
+	},
+	"devDependencies": {
+		"vitest": "^4.0.17"
 	}
 }
