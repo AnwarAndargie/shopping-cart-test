@@ -19,10 +19,14 @@ export class ShoppingCart {
     private items: Map<string, CartItem> = new Map();
 
     addProduct(name: string, unitPrice: number | string, quantity: number): void {
-        const price = new Decimal(unitPrice).toDP(2, Decimal.ROUND_HALF_UP);
-
-        const item = new CartItem(name, price, quantity);
-        this.items.set(name, item);
+        const existingItem = this.items.get(name);
+        if (existingItem) {
+            existingItem.quantity += quantity;
+        } else {
+            const price = new Decimal(unitPrice).toDP(2, Decimal.ROUND_HALF_UP);
+            const item = new CartItem(name, price, quantity);
+            this.items.set(name, item);
+        }
     }
 
     getTotal(): Decimal {

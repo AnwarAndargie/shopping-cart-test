@@ -54,4 +54,26 @@ describe('ShoppingCart', () => {
         expect(() => cart.addProduct("Bad Price", -10, 1)).toThrow("Unit price must be positive");
         expect(() => cart.addProduct("Bad Price", 0, 1)).toThrow("Unit price must be positive");
     });
+
+    it('should verify Step 2 requirements: Add additional products of the same type', () => {
+        // Given: An empty shopping cart
+        const cart = new ShoppingCart();
+
+        // And a product, Dove Soap with a unit price of 39.99
+        // When: The user adds 5 Dove Soaps to the shopping cart
+        cart.addProduct("Dove Soap", 39.99, 5);
+
+        // And then adds another 3 Dove Soaps to the shopping cart
+        cart.addProduct("Dove Soap", 39.99, 3);
+
+        // Then: The shopping cart should contain 8 Dove Soaps each with a unit price of 39.99
+        const items = cart.getItems();
+        expect(items).toHaveLength(1);
+        expect(items[0].name).toBe("Dove Soap");
+        expect(items[0].quantity).toBe(8);
+        expect(items[0].unitPrice.equals(new Decimal("39.99"))).toBe(true);
+
+        // And the shopping cart’s total price should equal 319.92
+        expect(cart.getTotal().equals(new Decimal("319.92"))).toBe(true);
+    });
 });
