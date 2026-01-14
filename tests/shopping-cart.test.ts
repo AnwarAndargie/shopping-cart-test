@@ -76,4 +76,39 @@ describe('ShoppingCart', () => {
         // And the shopping cart’s total price should equal 319.92
         expect(cart.getTotal().equals(new Decimal("319.92"))).toBe(true);
     });
+
+    it('should verify Step 3 requirements: Calculate the tax rate of the shopping cart with multiple items', () => {
+        // Given: An empty shopping cart
+        const cart = new ShoppingCart();
+
+        // And a product, Dove Soap with a unit price of 39.99
+        // And another product, Axe Deo with a unit price of 99.99
+        // And a sales tax rate of 12.5%
+
+        // When: The user adds 2 Dove Soaps to the shopping cart
+        cart.addProduct("Dove Soap", 39.99, 2);
+
+        // And then adds 2 Axe Deos to the shopping cart
+        cart.addProduct("Axe Deo", 99.99, 2);
+
+        // Then: The shopping cart should contain 2 Dove Soaps each with a unit price of 39.99
+        // And the shopping cart should contain 2 Axe Deos each with a unit price of 99.99
+        const items = cart.getItems();
+        const dove = items.find(i => i.name === "Dove Soap");
+        const axe = items.find(i => i.name === "Axe Deo");
+
+        expect(dove).toBeDefined();
+        expect(dove?.quantity).toBe(2);
+        expect(dove?.unitPrice.equals(new Decimal("39.99"))).toBe(true);
+
+        expect(axe).toBeDefined();
+        expect(axe?.quantity).toBe(2);
+        expect(axe?.unitPrice.equals(new Decimal("99.99"))).toBe(true);
+
+        // And the total sales tax amount for the shopping cart should equal 35.00
+        expect(cart.getSalesTax(12.5).equals(new Decimal("35.00"))).toBe(true);
+
+        // And the shopping cart’s total price should equal 314.96
+        expect(cart.getTotalWithTax(12.5).equals(new Decimal("314.96"))).toBe(true);
+    });
 });

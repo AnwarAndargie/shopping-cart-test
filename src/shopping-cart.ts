@@ -36,6 +36,15 @@ export class ShoppingCart {
         return sum.toDP(2, Decimal.ROUND_HALF_UP);
     }
 
+    getSalesTax(taxRate: number): Decimal {
+        const rate = new Decimal(taxRate).div(100);
+        return this.getTotal().mul(rate).toDP(2, Decimal.ROUND_HALF_UP);
+    }
+
+    getTotalWithTax(taxRate: number): Decimal {
+        return this.getTotal().add(this.getSalesTax(taxRate)).toDP(2, Decimal.ROUND_HALF_UP);
+    }
+
     getItems(): CartItem[] {
         return Array.from(this.items.values());
     }
